@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail IA - Chat Simple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .menu {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #1a73e8;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu li a:hover {
+            background-color: #e8f0fe;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Styles spécifiques au chat */
+        #chat-form {
+            margin-top: 1rem;
+        }
+
+        #chat-input {
+            width: 70%;
+            padding: 0.5rem;
+            margin-right: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #chat-submit {
+            padding: 0.5rem 1rem;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #chat-response {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Portail d'Interaction avec l'IA</h1>
+    </header>
+
+    <nav>
+        <ul class="menu">
+            <li><a href="#" data-section="chat">Chat IA</a></li>
+            <li><a href="#" data-section="generate">Générer Contenu</a></li>
+            <li><a href="#" data-section="analyze">Analyse IA</a></li>
+            <li><a href="#" data-section="learn">Apprendre sur l'IA</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="chat" class="section active">
+            <h2>Chat avec une IA Simple</h2>
+            <p>Pose-moi des questions simples auxquelles je peux répondre par oui ou non !</p>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Pose ta question...">
+                <button type="submit" id="chat-submit">Envoyer</button>
+            </form>
+            <div id="chat-response"></div>
+        </div>
+
+        <div id="generate" class="section">
+            <h2>Générer du contenu</h2>
+            <p>Générez du contenu avec l'IA. (À implémenter)</p>
+        </div>
+
+        <div id="analyze" class="section">
+            <h2>Analyse par IA</h2>
+            <p>Analysez des données. (À implémenter)</p>
+        </div>
+
+        <div id="learn" class="section">
+            <h2>Apprendre sur l'IA</h2>
+            <p>Découvrez l'IA. (À implémenter)</p>
+        </div>
+    </main>
+
+    <script>
+        // Gestion du menu
+        const menuLinks = document.querySelectorAll('.menu a');
+        const sections = document.querySelectorAll('.section');
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                sections.forEach(section => section.classList.remove('active'));
+                const sectionId = link.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Gestion du chat IA simple
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatResponse = document.getElementById('chat-response');
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const question = chatInput.value.trim().toLowerCase();
+
+            // Vérifier si la question est complexe
+            if (question.length > 50 || 
+                question.includes('pourquoi') || 
+                question.includes('comment') || 
+                question.split(' ').length > 10) {
+                chatResponse.textContent = "Désolé, ta question est trop complexe pour moi ! Je ne peux répondre que par oui ou non à des questions simples.";
+            } else if (question === '') {
+                chatResponse.textContent = "Pose-moi une question simple !";
+            } else {
+                // Réponse aléatoire oui/non
+                const random = Math.random() < 0.5;
+                chatResponse.textContent = random ? "Oui" : "Non";
+            }
+
+            chatInput.value = ''; // Réinitialiser l'input
+        });
+    </script>
+</body>
+</html>
